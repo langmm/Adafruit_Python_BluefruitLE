@@ -27,8 +27,11 @@ import objc
 
 
 # Load CoreBluetooth bundle.
-objc.loadBundle("CoreBluetooth", globals(),
-    bundle_path=objc.pathForFramework(u'/System/Library/Frameworks/IOBluetooth.framework/Versions/A/Frameworks/CoreBluetooth.framework'))
+objc.loadBundle("CoreBluetooth", module_globals=globals(),
+    bundle_path=objc.pathForFramework(u'/System/Library/Frameworks/CoreBluetooth.framework')) 
+objc.loadBundle("IOBluetooth", module_globals=globals(),
+    bundle_path=objc.pathForFramework(u'/System/Library/Frameworks/IOBluetooth.framework')) 
+#u'/System/Library/Frameworks/IOBluetooth.framework/Versions/A/Frameworks/CoreBluetooth.framework'))
 
 
 def cbuuid_to_uuid(cbuuid):

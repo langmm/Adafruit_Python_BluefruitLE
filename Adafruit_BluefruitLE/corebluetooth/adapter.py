@@ -74,9 +74,19 @@ class CoreBluetoothAdapter(Adapter):
         # Mac OSX has no oncept of BLE adapters so just return a fixed value.
         return "Default Adapter"
 
-    def start_scan(self, timeout_sec=TIMEOUT_SEC):
+    def start_scan(self, x, timeout_sec=TIMEOUT_SEC):
         """Start scanning for BLE devices."""
-        get_provider()._central_manager.scanForPeripheralsWithServices_options_(None, None)
+        from past.builtins import map
+        from .objc_helpers import uuid_to_cbuuid
+        for k in dir(get_provider()._central_manager):
+            print(k)
+        # x = u'6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+        # print(x)
+        print(x)
+        cbuuids = [uuid_to_cbuuid(ix) for ix in x]
+        print(cbuuids)
+        print(get_provider()._central_manager.retrievePeripherals_(cbuuids))
+        get_provider()._central_manager.scanForPeripheralsWithServices_options_(cbuuids, None)
         self._is_scanning = True
 
     def stop_scan(self, timeout_sec=TIMEOUT_SEC):

@@ -24,10 +24,11 @@ def main():
     # Get the first available BLE network adapter and make sure it's powered on.
     adapter = ble.get_default_adapter()
     adapter.power_on()
+    print('adapter', adapter)
     print('Using adapter: {0}'.format(adapter.name))
 
     # Start scanning with the bluetooth adapter.
-    adapter.start_scan()
+    adapter.start_scan(UART.ADVERTISED)
     # Use atexit.register to call the adapter stop_scan function before quiting.
     # This is good practice for calling cleanup code in this main function as
     # a try/finally block might not be called since this is a background thread.
@@ -37,6 +38,7 @@ def main():
     # Enter a loop and print out whenever a new UART device is found.
     known_uarts = set()
     while True:
+        print('loop')
         # Call UART.find_devices to get a list of any UART devices that
         # have been found.  This call will quickly return results and does
         # not wait for devices to appear.
